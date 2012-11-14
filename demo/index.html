@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Wrtier</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+	<script src="js/jquery-swfClipboard.js"></script>
+</head>
+<body>
+	<textarea id="text_a"></textarea>
+	<button id="copy_a">Copy</button>
+	<textarea id="text_b"></textarea>
+	<button id="copy_b">Copy</button>
+	<textarea id="paste_here" placeholder="try to paste the text here"></textarea>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#copy_a").swfClipboard($("#text_a").text, './src/swfClipboard.swf');
+			$("#copy_b").swfClipboard($("#text_b").text);
+		});
+	</script>
+</body>
+</html>
