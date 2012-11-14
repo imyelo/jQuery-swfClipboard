@@ -1,22 +1,47 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Wrtier</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery Plugin - swfClipboard</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-	<script src="js/jquery-swfClipboard.js"></script>
+	<script src="src/jquery-swfClipboard.js"></script>
 </head>
 <body>
-	<textarea id="text_a"></textarea>
-	<button id="copy_a">Copy</button>
-	<textarea id="text_b"></textarea>
-	<button id="copy_b">Copy</button>
-	<textarea id="paste_here" placeholder="try to paste the text here"></textarea>
+	<div id="left" style="float: left; width: 40%; margin: 5px 5%;">
+		<textarea id="text_a">$("#copy_a").swfClipboard($("#text_a").text(), './src/swfClipboard.swf');</textarea>
+		<button id="copy_a">Copy</button>
+		<textarea id="text_b">$("#copy_b").swfClipboard($("#text_b").text(), './src/swfClipboard.swf', function(text){
+		alert('b : ' + text);
+	});</textarea>
+		<button id="copy_b">Copy</button>
+		<textarea id="text_c">$("#copy_c").swfClipboard($("#text_c").text(), function(text){
+		alert('success');
+	}, './src/swfClipboard.swf');</textarea>
+		<button id="copy_c">Copy</button>
+		<textarea id="text_d">$("#copy_d").swfClipboard({text: $("#text_d").text(), swf: './src/swfClipboard.swf', callback: function(text){
+		alert(text);
+	}, debug: 'true');</textarea>
+		<button id="copy_d">Copy</button>
+	</div>
+	<div id="right" style="float: left; width: 40%; margin: 5px 5%;">
+		<textarea id="paste_here" placeholder="try to paste the text here"></textarea>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#copy_a").swfClipboard($("#text_a").text, './src/swfClipboard.swf');
-			$("#copy_b").swfClipboard($("#text_b").text);
+			$("#left > textarea").css({clear: "both", width: "100%", height: "80px"});
+			$("#right > textarea").css({clear: "both", width: "100%", height: "500px"});
+			$("button").css({width: '30%', height: "30px"});
+			$("#copy_a").swfClipboard($("#text_a").text(), './src/swfClipboard.swf');
+			$("#copy_b").swfClipboard($("#text_b").text(), './src/swfClipboard.swf', function(text){
+				alert('b : ' + text);
+			});
+			$("#copy_c").swfClipboard($("#text_c").text(), function(){
+				alert('success');
+			}, './src/swfClipboard.swf');
+			$("#copy_d").swfClipboard({text: $("#text_d").text(), swf: './src/swfClipboard.swf', callback: function(text){
+				alert(text);
+			}, debug: 'true'});
+
 		});
 	</script>
 </body>
