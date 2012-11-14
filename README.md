@@ -1,25 +1,25 @@
-## jQuery Plugin - swfClipboard
+# jQuery Plugin - swfClipboard
 
 
 [Download Demo](https://github.com/imyelo/jQuery-swfClipboard/tree/master/demo)
 
-### How to use it
-#### 0. Sorry for my English.
-#### 1. Include the jQuery and SWFObject JavaScript library in the head of your HTML page
+## How to use it
+### 0. Sorry for my English.
+### 1. Include the jQuery and SWFObject JavaScript library in the head of your HTML page
 SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.com/swfobject/swfobject) :
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 
-#### 2. Include the swfClipboard JavaScript libraray
+### 2. Include the swfClipboard JavaScript libraray
 
 	<script src="jquery-swfClipboard.js"></script>
 
-#### 3. Bind a handle to your button
+### 3. Bind a handle to your button
 
 	$("#button").swfClipboard('Sth here.');
 
-### Options
+## Options
 - *text (string)*
 	the content you want to copy to the clipboard.
 - *swf (string)*
@@ -29,7 +29,7 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 	the callback function has a parameter as the content you want to copy if the copying method complete successfully.
 - debug (string)
 
-#### Anyway, you can use swfClipboard easily as the following way: 
+### Anyway, you can use swfClipboard easily as the following way: 
 + $selector.swfClipboard(object);
 	- *text*
 	- *swf*
@@ -71,5 +71,5 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 		</script>
 	</body></html>
 
-### License
+## License
 Released under the [MIT license](http://opensource.org/licenses/MIT).
