@@ -15,9 +15,11 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 
 	<script src="jquery-swfClipboard.js"></script>
 
-### 3. Bind a handle to your button
+### 3. Bind a handler to your button *inside a 'mouseover' event*
 
-	$("#button").swfClipboard('Sth here.');
+	$("#button").mouseover(function(){
+		$(this).swfClipboard('Sth here.');
+	});
 
 ## Options
 - *text (string)*  
@@ -29,25 +31,30 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 	the callback function has a parameter as the content you want to copy if the copying method complete successfully.
 - debug (string)  
 
-### Anyway, you can use swfClipboard easily as the following way: 
-+ $selector.swfClipboard(object);
+### Anyway, you can bind 'swfClipboard' easily as : 
++ $(this).swfClipboard(object);
 	- *text*
 	- *swf*
 	- *callback*
 	- debug
-+ $selector.swfClipboard(string);
++ $(this).swfClipboard(string);
 	- *text*
-+ $selector.swfClipboard(string, function);
++ $(this).swfClipboard(string, function);
 	- *text*
 	- *callback*
-+ $selector.swfClipboard(string, string);
++ $(this).swfClipboard(string, string);
 	- *text*
 	- *swf*
- $selector.swfClipboard(string, string, function) / .swfClipboard(string, function, string)
+ $(this).swfClipboard(string, string, function) / .swfClipboard(string, function, string)
 	- *text*
 	- *swf / callback*
 	- *callback / swf*
 
+### Don't forget ! swfClipboard must be in a 'mouseover' event
+	
+	$selector.mouseover(function () {
+		$(this).swfClipboard(...);
+	})
 
 *e.g. :*
 
@@ -55,18 +62,24 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 	<html>
 	<head>
 		<title>jQuery Plugin - swfClipboard</title>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+		<script src="js/jquery-1.8.2.min.js"></script>
+		<script src="js/swfobject.js"></script>
 		<script src="js/jquery-swfClipboard.js"></script>
 	</head>
 	<body>
-		<textarea id="text"></textarea>
+		<textarea id="text">Copy me !</textarea>
 		<button id="copy">Copy</button>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("#copy").swfClipboard($("#text").text(), './src/swfClipboard.swf', function(text){
-					alert('Completed! The content is : ' + text);
-				});
+				$("#copy").mouseover(function () {	
+					$(this).swfClipboard({
+						text : $("#text").text(),
+						swf : './js/swfClipboard.swf',
+						callback : function(text){
+							alert('Completed! The content is : ' + text);
+						}
+					});
+				})
 			});
 		</script>
 	</body></html>

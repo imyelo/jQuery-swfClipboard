@@ -8,53 +8,63 @@
  * http://www.opensource.org/licenses/MIT
  */
 (function($, swfobject) {
-	$.fn.swfClipboard = function() {
+	$.fn.swfClipboard = function(){
 
 		var $self = $(this),
-			opts, defaults, options, swf_params;
-		defaults = {
-			text : '',
-			swf : 'swfClipboard.swf',
-			callback : function(){},
-			debug : 'false'
+			self = this,
+			$arguments = arguments;
+
+
+		var setArguments = function(args){
+			var opts, defaults, options;
+			defaults = {
+				text : '',
+				swf : 'swfClipboard.swf',
+				callback : function(){},
+				debug : 'false'
+			};
+
+			// arguments
+			switch (args.length) {
+				case 1 :
+				opts = args[0];
+				break;
+				case 2 :
+				if (typeof args[1] === 'string') {
+					opts = {text: args[0], swf: args[1]};
+				} else if (typeof args[1] === 'function') {
+					opts = {text: args[0], callback: args[1]};
+				} else {
+					console.error('swfClipboard : Illegal_args');
+					return false;
+				}
+				break;
+				case 3 :
+				if (typeof args[1] === 'string' && typeof args[2] === 'function') {
+					opts = {text: args[0], swf: args[1], callback: args[2]};
+				} else if (typeof args[1] === 'function' && typeof args[2] === 'string') {
+					opts = {text: args[0], callback: args[1], swf: args[2]};
+				} else {
+					console.error('swfClipboard : Illegal_Arguments');
+					return false;
+				}
+				break;
+				default :
+				console.error('swfClipboard : Illegal_Arguments');
+				return false;
+			}
+
+			if ( typeof opts === 'string' || typeof opts === 'number') {
+				options = $.extend({}, defaults, {text: opts});
+			} else {
+				options = $.extend({}, defaults, opts);
+			}
+			// console.log(options);
+			return options;
 		};
+		
 
-		// arguments
-		switch (arguments.length) {
-			case 1 :
-			opts = arguments[0];
-			break;
-			case 2 :
-			if (typeof arguments[1] === 'string') {
-				opts = {text: arguments[0], swf: arguments[1]};
-			} else if (typeof arguments[1] === 'function') {
-				opts = {text: arguments[0], callback: arguments[1]};
-			} else {
-				console.error('swfClipboard : Illegal_Arguments');
-				return false;
-			}
-			break;
-			case 3 :
-			if (typeof arguments[1] === 'string' && typeof arguments[2] === 'function') {
-				opts = {text: arguments[0], swf: arguments[1], callback: arguments[2]};
-			} else if (typeof arguments[1] === 'function' && typeof arguments[2] === 'string') {
-				opts = {text: arguments[0], callback: arguments[1], swf: arguments[2]};
-			} else {
-				console.error('swfClipboard : Illegal_Arguments');
-				return false;
-			}
-			break;
-			default :
-			console.error('swfClipboard : Illegal_Arguments');
-			return false;
-		}
-		if ( typeof opts === 'string' || typeof opts === 'number') {
-			options = $.extend({}, defaults, {text: opts});
-		} else {
-			options = $.extend({}, defaults, opts);
-		}
-
-		swf_params = {
+		var	swf_params = {
 			wmode: "transparent",
 			allowScriptAccess: "always"
 		};
@@ -79,7 +89,10 @@
 			clearElement($clipboard);
 			$clipboard = $(div).appendTo($parent);
 			$clipboard.css({background: 'none', top: top, left: left, position: 'absolute', 'z-index': z_index, float: 'left'});
+			// $clipboard.css({top: top, left: left, position: 'absolute', 'z-index': z_index, float: 'left'});
 			swfobject.embedSWF(options.swf, 'swfClipboard_holder', width, height, '9.0.0', null, {c: options.text, debug: options.debug, callback : '$.swfClipboardCallback'}, swf_params);
+			
+			return $clipboard;
 		};
 		
 		var clearElement = function($ele) {
@@ -88,11 +101,45 @@
 			}
 		};
 
-		$self.mouseenter(function () {
-			showClipboard(options);
+		var $clip = showClipboard(setArguments($arguments));
+
+		$clip.bind('mouseout, mouseleave', function (e) {
+			var mousePosX = e.pageX,
+				mousePosY = e.pageY,
+				top = $self.offset().top,
+				left = $self.offset().left,
+				width = $self.width(),
+				height = $self.height();
+			if ((mousePosX >= left + width) || (mousePosX <= left)) {
+				if ((mousePosY >= top + height) || (mousePosY <= top)) {
+					clearElement($clip);
+					// console.log('removed');
+				}
+			}
+			/*
+			console.log('x : ' + mousePosX);
+			console.log('y : ' + mousePosY);
+			console.log('left : ' + left);
+			console.log('right : ' + (left + width));
+			console.log('width : ' + width);
+			console.log('top : ' + top);
+			console.log('bottom : ' + (top + height));
+			console.log('height : ' + height);
+			*/
 		});
-		// $self.mouseleave(function () {
+
+		return $clip;
+
+		// $self.mouseover(function () {
 		//	clearElement($("#swfClipboard_cover"));
+		//	console.log('removed');
 		// });
+		// $self.mousedown(function () {
+		//	clearElement($("#swfClipboard_cover"));
+		//	console.log('removed');
+		// });
+
+
 	};
+
 })(jQuery, swfobject);

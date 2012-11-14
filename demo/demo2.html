@@ -2,18 +2,24 @@
 <html>
 <head>
 	<title>jQuery Plugin - swfClipboard</title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/swfobject.js"></script>
 	<script src="js/jquery-swfClipboard.js"></script>
 </head>
 <body>
-	<textarea id="text"></textarea>
+	<textarea id="text">Copy me !</textarea>
 	<button id="copy">Copy</button>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#copy").swfClipboard($("#text").text(), './src/swfClipboard.swf', function(text){
-				alert('Completed! The content is : ' + text);
-			});
+			$("#copy").mouseover(function () {	
+				$(this).swfClipboard({
+					text : $("#text").text(),
+					swf : './js/swfClipboard.swf',
+					callback : function(text){
+						alert('Completed! The content is : ' + text);
+					}
+				});
+			})
 		});
 	</script>
 </body></html>
