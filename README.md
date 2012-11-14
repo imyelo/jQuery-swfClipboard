@@ -20,14 +20,14 @@ SwfClipboard requires [jQuery](http://jquery.com/) and swfObject(https://github.
 	$("#button").swfClipboard('Sth here.');
 
 ## Options
-- *text (string)*
+- *text (string)*  
 	the content you want to copy to the clipboard.
-- *swf (string)*
+- *swf (string)*  
 	the path of the 'swfClipboard.swf'.
 	This argument has a default value as './swfClipboard.swf', but if you move the swf file to another path, 'swf' is must be set.
-- *callback (function(t))*
+- *callback (function(t))*  
 	the callback function has a parameter as the content you want to copy if the copying method complete successfully.
-- debug (string)
+- debug (string)  
 
 ### Anyway, you can use swfClipboard easily as the following way: 
 + $selector.swfClipboard(object);
